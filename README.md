@@ -1,6 +1,16 @@
 #  1. Improving Performance of Service Mesh for Cloud Native Applications- [Improving Performance of Service Mesh for Cloud Native Applications](#improving-performance-of-service-mesh-for-cloud-native-applications)
-  - [Description](#description)
-  - [Background Knowledge](#background-knowledge)
+- [1. Improving Performance of Service Mesh for Cloud Native Applications- Improving Performance of Service Mesh for Cloud Native Applications](#1-improving-performance-of-service-mesh-for-cloud-native-applications--improving-performance-of-service-mesh-for-cloud-native-applications)
+- [2. Description](#2-description)
+- [3. Background Knowledge](#3-background-knowledge)
+  - [3.1. Istio Envoy](#31-istio-envoy)
+  - [3.2. Future Work](#32-future-work)
+    - [3.2.1. IPC Socket \& Share Buffer](#321-ipc-socket--share-buffer)
+    - [3.2.2. EBPF](#322-ebpf)
+    - [3.2.3. Intel Data Direct I/O technology](#323-intel-data-direct-io-technology)
+    - [3.2.4. Load Balancer change](#324-load-balancer-change)
+  - [3.3. Question](#33-question)
+  - [3.4. MeshInSight](#34-meshinsight)
+
 
 # 2. Description
 Unlike traditional monolithic applications, cloud-native applications are the 
@@ -17,7 +27,7 @@ significant number of services. This work aims to improve the performance of ser
 cloud-native applications.
 
 # 3. Background Knowledge
-## Istio Envoy
+## 3.1. Istio Envoy
 Istio uses an extended version of the Envoy proxy. Envoy is a high-performance proxy developed in C++ to mediate all inbound and outbound traffic for all services in the service mesh. Envoy proxies are the only Istio components that interact with data plane traffic.Envoy is a high-performance proxy developed in C++ with built-in service discovery, load balancing, TLS termination, HTTP/2, GRPC proxy, fuse, health check, grayscale publishing based on percentage traffic splitting, fault injection, and more.
 
 We start with a sample tutorial from `bookinfo` to analyze the envoy component.
@@ -92,33 +102,33 @@ DROP       all  -- !127.0.0.0/8          127.0.0.0/8          /* block incoming 
 
 In Kubernetes, Pods are actually a concept that the Kubernetes project abstracts for you as an analogous process group; the Container managed by Pods runs the real processes within the program, and Envoy is also a single-process, multi-threaded project, so the communication between Envoy and Pods can actually be understood as Inter-process communication.
 
-## Future Work
+## 3.2. Future Work
 Thesis in ignoring the Protocol Parsing, IPC communication, data copy between user state and kernel state is the focus between the impact Latency.
-### IPC Socket & Share Buffer
+### 3.2.1. IPC Socket & Share Buffer
 Combined with the relationship between Pod and Envoy, I think IPC communication can be used in general with IPC Socket, Shared memory. Optimization direction can be developed from these two directions.
 
 Both can replace tcp/ip, ignore frequent kernel and user state switching, and shared memory combined with semaphores can handle very high concurrency, for example in the storage underlay of databases, where shared memory is also widely used.
 
-### EBPF
+### 3.2.2. EBPF
 [Reference 3 in paper](https://events.istio.io/istiocon-2021/sessions/accelerate-istio-cni-with-ebpf/) mentioned that ebpf also can speed up. Over the last two years, eBPF has become a technology trend and many eBPF-based projects have been released to the community. Tools like Cilium and Pixie demonstrate a large number of use cases for eBPF in terms of observability and network packet processing. With the sockops and redir features of eBPF, packets can be efficiently processed by transferring directly from the ingress socket to the egress socket. In Istio mesh, eBPF can be used to replace iptables rules and speed up the data plane by shortening the data path.
 
 <img src="./figure/Sidecar%20network.png" alt="Sidecar Network" width=700>
 
-###  Intel Data Direct I/O technology
+###  3.2.3. Intel Data Direct I/O technology
 [DDIO Info(chinese)](https://blog.csdn.net/qq_40500045/article/details/109272627)
 
 Change Protocol to RDMA or DPDK
 
-### Load Balancer change
+### 3.2.4. Load Balancer change
 single modern switching ASIC
 
-## Question
+## 3.3. Question
 **IN PAPER**:For small message sizes that are common to microservice workloads, the additional system calls in implementation negate the savings from avoiding the copy operation. 
 
 **I don't know why there, Conflict with Table 2 in Paper**
 
 
-## MeshInSight
+## 3.4. MeshInSight
 Exsample 1 Online Result
 ```bash
 trace.json, (average) latency overhead: 270.61650124895914 us, cpu overhead: 190796.79702552065 virtual cores
