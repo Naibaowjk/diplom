@@ -4,7 +4,8 @@
 - [3. Background Knowledge](#3-background-knowledge)
   - [3.1. MeshInsight](#31-meshinsight)
   - [3.2. Istio](#32-istio)
-  - [3.3. DPDK](#33-dpdk)
+  - [DPDK](#dpdk)
+  - [P4Lang](#p4lang)
 
 
 # 2. Description
@@ -29,9 +30,50 @@ Note: MeshInsight currently only works on [`Istio`](#Istio). We plan to extend i
 
 Follow this repo to get more: [Github: MeshInsight](https://github.com/UWNetworksLab/meshinsight)
 
+I also change some setting in bash script. U can also check my origin branch [Github: Naibaowjk-Meshinsight](https://github.com/Naibaowjk/meshinsight)
+
 ## 3.2. Istio
 Decoupling the control plane and data plane has been the goal of software development, application developers prefer to work in an ideal situation, that is, the network is stable, then the side car mode can handle the work of the data plane for application developers, the core content is to forward the application Inbound and Outbound data, so the data plane can be called Then the forwarding strategy is guided by the control plane.
 
 Among the more popular solutions, the more popular is the control plane using Istio to manage, and Istio integrated data plane [Envoy](./doc/istio/Envoy.md) components.
 
-## 3.3. DPDK
+Note: if your work machine has a limited number of CPU cores, creating istio example may fail due to CPU limitation. For example: 
+
+```bash
+# bookinfo
+(diplom) lighthouse@VM-0-5-ubuntu:~/downloads/meshinsight$ kubectl get pods
+NAME                             READY   STATUS    RESTARTS   AGE
+details-v1-6997d94bb9-8jl2h      2/2     Running   0          15m
+productpage-v1-d4f8dfd97-5gs44   0/2     Pending   0          15m
+ratings-v1-b8f8fcf49-bpskv       2/2     Running   0          15m
+reviews-v1-5896f547f5-qpvr9      2/2     Running   0          15m
+reviews-v2-5d99885bc9-hjjtk      0/2     Pending   0          15m
+reviews-v3-589cb4d56c-qq84z      0/2     Pending   0          15m
+
+# Error about cpu
+$ kubectl describe pods productpage-v1-d4f8dfd97-5gs44 | grep cpu
+kubernetes.io/limit-ranger: LimitRanger plugin set: cpu request for container productpage; cpu limit for container productpage
+```
+You should change the setting in `$(istio-DIR)/manifests/charts/istio-control/istio-discovery/values.yaml`
+find this:
+```yaml
+  proxy:
+    image: proxyv2
+
+    # This controls the 'policy' in the sidecar injector.
+```
+change the cpu resources:
+```yaml
+    resources:
+      requests:
+        cpu: 10m # For example
+        memory: 128Mi
+```
+
+## DPDK
+Follow this link to install: [DPDK Official Website](http://doc.dpdk.org/guides/linux_gsg/build_dpdk.html)
+Recommand install it in system folder.
+
+
+## P4Lang
+we offerd a script `p4lang/install.sh` to install p4 tutorial, which has been tested in Ubuntu 22.04
