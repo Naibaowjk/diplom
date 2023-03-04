@@ -4,18 +4,52 @@
 set -xe
 
 # Prepare
-mkdir ~/applications
-mkdir ~/downloads
-mkdir ~/.local
-cd downloads
-rm -rf tutorials
-rm -rf mininet
-rm -rf protobuf
-rm -rf gRPC
-rm -rf PI 
-rm -rf behavioral-model
-rm -rf p4c
-rm -rf ptf
+FILE1=~/applications
+if [ ! -d "$FILE1" ]; then
+    mkdir ~/applications
+fi
+FILE2=~/downloads
+if [ ! -d "$FILE2" ]; then
+    mkdir ~/downloads
+fi
+FILE3=~/.local
+if [ ! -d "$FILE3" ]; then
+    mkdir ~/.local
+fi
+cd  ~/downloads
+FILE1=tutorials
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+FILE1=mininet
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+FILE1=protobuf
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+FILE1=gRPC
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+sudo rm -rf PI 
+FILE1=PI
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+FILE1=behavioral-model
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+FILE1=p4c
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
+FILE1=ptf
+if [ -d "$FILE1" ]; then
+    sudo rm -rf $FILE1
+fi
 git clone https://github.com/p4lang/tutorials.git
 export PATCH_DIR=~/downloads/tutorials/vm-ubuntu-20.04/patches
 
