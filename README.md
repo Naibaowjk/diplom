@@ -72,7 +72,8 @@ change the cpu resources:
 
 ## DPDK
 Follow this link to install: [DPDK Official Website](http://doc.dpdk.org/guides/linux_gsg/build_dpdk.html)
-Recommand install it in system folder.
+
+Or we offered a script to install it `dpdk/install.sh`, it will install dpdk in `~/applications/dpdk`.
 
 
 ## P4Lang

@@ -6,51 +6,50 @@ set -xe
 # Prepare
 FILE1=~/applications
 if [ ! -d "$FILE1" ]; then
-    mkdir ~/applications
+    mkdir ~/applications;
 fi
 FILE2=~/downloads
 if [ ! -d "$FILE2" ]; then
-    mkdir ~/downloads
+    mkdir ~/downloads;
 fi
 FILE3=~/.local
 if [ ! -d "$FILE3" ]; then
-    mkdir ~/.local
+    mkdir ~/.local;
 fi
 cd  ~/downloads
-FILE1=tutorials
+FILE1=$HOME/downloads/tutorials
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-FILE1=mininet
+FILE1=$HOME/downloads/mininet
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-FILE1=protobuf
+FILE1=$HOME/downloads/protobuf
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-FILE1=gRPC
+FILE1=$HOME/downloads/grpc
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-sudo rm -rf PI 
-FILE1=PI
+FILE1=$HOME/downloads/PI
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-FILE1=behavioral-model
+FILE1=$HOME/downloads/behavioral-model
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-FILE1=p4c
+FILE1=$HOME/downloads/p4c
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-FILE1=ptf
+FILE1=$HOME/downloads/ptf
 if [ -d "$FILE1" ]; then
-    sudo rm -rf $FILE1
+    sudo rm -rf $FILE1;
 fi
-git clone https://github.com/p4lang/tutorials.git
+git clone https://github.com/Naibaowjk/tutorials.git
 export PATCH_DIR=~/downloads/tutorials/vm-ubuntu-20.04/patches
 
 
@@ -67,6 +66,9 @@ sudo find /usr/lib /usr/local $HOME/.local | sort > $HOME/usr-local-7-after-mini
 
 # --- Emacs --- #
 sudo cp $HOME/downloads/tutorials/vm-ubuntu-20.04/p4_16-mode.el /usr/share/emacs/site-lisp/
+if [ -d "$HOME/.emacs.d" ]; then
+    sudo rm -rf $HOME/.emacs.d;
+fi
 mkdir $HOME/.emacs.d/
 echo "(autoload 'p4_16-mode' \"p4_16-mode.el\" \"P4 Syntax.\" t)" > init.el
 echo "(add-to-list 'auto-mode-alist '(\"\\.p4\\'\" . p4_16-mode))" | tee -a init.el

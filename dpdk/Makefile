@@ -1,10 +1,6 @@
 # binary name
 APP = helloworld
 
-# include
-INCLUDE_DIR := $(shell $(HOME))/applications/dpdk/include
-INCLUDES     := $(INCLUDE_DIR)
-LIB_INCLUDES := $(INCLUDE_DIR)
 
 # all source are stored in SRCS-y
 SRCS-y := helloworld.c
