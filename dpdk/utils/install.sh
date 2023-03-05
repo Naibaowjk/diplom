@@ -39,4 +39,5 @@ sudo ldconfig
 echo "export PKG_CONFIG_PATH=/home/lighthouse/applications/dpdk/lib/x86_64-linux-gnu/pkgconfig/" >> ~/.bashrc
 source ~/.bashrc
 
-echo "export LD_LIBRARY_PATH=/home/lighthouse/applications/dpdk/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH" | sudo tee -a /etc/profile
+echo "export LD_LIBRARY_PATH=/home/lighthouse/applications/dpdk/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH" >> ~/.bashrc
+source ~/.bashrc

@@ -91,7 +91,7 @@ sudo find /usr/lib /usr/local $HOME/.local | sort > $HOME/usr-local-1-before-pro
 git clone https://github.com/google/protobuf.git
 cd protobuf
 git checkout ${PROTOBUF_COMMIT}
-sudo apt-get install autoconf automake libtool
+sudo apt-get install -y autoconf automake libtool
 ./autogen.sh
 # install-p4dev-v4.sh script doesn't have --prefix=/usr option here.
 ./configure --prefix=/usr
@@ -111,6 +111,7 @@ git submodule update --init --recursive
 # compile and install successfully on an Ubuntu 19.10 and later
 # system.
 patch -p1 < "${PATCH_DIR}/disable-Wno-error-and-other-small-changes.diff" || echo "Errors while attempting to patch grpc, but continuing anyway ..."
+patch < "${PATCH_DIR}/gprc-python-requirements.patch"
 make -j${NUM_CORES}
 sudo make install
 # I believe the following 2 commands, adapted from similar commands in
