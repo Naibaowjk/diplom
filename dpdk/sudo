@@ -1,1 +1,2 @@
 1024 /sys/devices/system/node/node0/hugepages/hugepages-2048kB/nr_hugepages
+nodev /mnt/huge hugetlbfs pagesize=1GB 0 0 tee -a /etc/fstab

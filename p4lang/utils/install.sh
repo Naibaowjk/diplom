@@ -196,4 +196,4 @@ cd ..
 find /usr/lib /usr/local $HOME/.local | sort > $HOME/usr-local-8-after-ptf-install.txt
 
 # reboot
-sudo reboot
+echo "finish! should run [sudo reboot]"

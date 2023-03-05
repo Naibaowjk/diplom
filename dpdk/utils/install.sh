@@ -14,6 +14,7 @@ tar xJf dpdk-22.11.1.tar.xz
 cd dpdk-stable-22.11.1/
 
 # build
+sudo apt-get install meson
 pip3 install meson ninja pyelftools
 meson setup build
 cd build
@@ -37,3 +38,5 @@ sudo ldconfig
 # edit pkg-config-path
 echo "export PKG_CONFIG_PATH=/home/lighthouse/applications/dpdk/lib/x86_64-linux-gnu/pkgconfig/" >> ~/.bashrc
 source ~/.bashrc
+
+echo "export LD_LIBRARY_PATH=/home/lighthouse/applications/dpdk/lib/x86_64-linux-gnu:$LD_LIBRARY_PATH" | sudo tee -a /etc/profile

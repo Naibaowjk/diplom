@@ -73,7 +73,9 @@ change the cpu resources:
 ## DPDK
 Follow this link to install: [DPDK Official Website](http://doc.dpdk.org/guides/linux_gsg/build_dpdk.html)
 
-Or we offered a script to install it `dpdk/install.sh`, it will install dpdk in `~/applications/dpdk`.
+Or we offered a script to install it `dpdk/utils/install.sh`, it will install dpdk in `~/applications/dpdk`.
+
+And we offered also a script to set hugepages, run with su `bash ./dpdk/utils/hugepage-setting.sh`.
 
 
 ## P4Lang
