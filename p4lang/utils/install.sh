@@ -98,7 +98,9 @@ sudo apt-get install -y autoconf automake libtool
 make -j${NUM_CORES}
 sudo make install
 sudo ldconfig
-cd ..
+cd python
+sudo python3 setup.py install 
+cd ../..
 
 sudo find /usr/lib /usr/local $HOME/.local | sort > $HOME/usr-local-2-after-protobuf.txt
 
@@ -120,8 +122,8 @@ sudo make install
 
 sudo find /usr/lib /usr/local $HOME/.local | sort > $HOME/usr-local-2b-before-grpc-pip3.txt
 pip3 list | tee $HOME/pip3-list-2b-before-grpc-pip3.txt
-pip3 install -r requirements.txt # cython-0.29.33
-GRPC_PYTHON_BUILD_WITH_CYTHON=1 pip3 install .
+sudo pip3 install -r requirements.txt # cython-0.29.33
+GRPC_PYTHON_BUILD_WITH_CYTHON=1 sudo pip3 install .
 sudo ldconfig
 cd ..
 

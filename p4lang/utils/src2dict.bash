@@ -58,3 +58,5 @@ move_usr_local_lib_python3_from_site_packages_to_dist_packages() {
     echo "Dest dir contents after moving: ${DST_DIR}"
     ls -lrt ${DST_DIR}
 }
+
+move_usr_local_lib_python3_from_site_packages_to_dist_packages
